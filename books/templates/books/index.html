@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container mt-5">
+    <form method="post" enctype="multipart/form-data" class="col-6 mx-auto card p-3 mb-5 shadow-lg">
+        {% csrf_token %}
+        <h2 style="text-align: center;">Book Store</h2>
+        <hr>
+        <div class="mb-3">
+            <label class="form-label">Book Name</label>
+            <input type="text" class="form-control" name="book_name">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Author Name</label>
+            <input type="text" class="form-control" name="author_name">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Book Year</label>
+            <input type="number" class="form-control" name="book_year">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Book Image</label>
+            <input type="file" class="form-control" name="book_image">
+        </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+    </form>
+    </div>
+<form>
+    <div class="m-5">
+        <div class="mx-auto col-6">
+            <label class="form-label">Search Book</label>
+
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Enter book name">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <table class="table table-bordered container">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Book Name</th>
+            <th scope="col">Authoe Name</th>
+            <th scope="col">Book Year</th>
+            <th scope="col">Book Image</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in books%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{b.book_name}}</td>
+            <td>{{b.author_name}}</td>
+            <td>{{b.book_year}}</td>
+            <td>
+                <img src="/media/{{b.book_image}}" style="height: 160px;">
+            </td>
+            <td>
+                <a href="/delete/{{b.id}}" class="btn btn-danger">Delete</a>
+                <a href="/update/{{b.id}}" class="btn btn-success">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+</body>
+</html>
